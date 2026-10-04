@@ -1,0 +1,370 @@
+/* 
+  ========================================
+  SECTION & STUDIO LIGHTING BACKGROUND
+  ========================================
+*/
+.programs-section {
+    position: relative;
+    min-height: 100vh;
+    /* Studio depth gradient instead of flat white */
+    background: radial-gradient(120% 120% at 50% -10%, #FFFFFF 0%, #F5F5F7 45%, #EBEBF0 100%);
+    box-shadow: inset 0 20px 50px rgba(0,0,0,0.02); 
+    color: #030303;
+    overflow: hidden;
+}
+
+/* 
+  ========================================
+  SEAMLESS SCROLL TRANSITION BANDS
+  ========================================
+*/
+.transition-bands {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+}
+
+.band {
+    flex: 1;
+    background: #030303; 
+    /* GSAP injects transform: scaleY() dynamically based on scroll. */
+    transform-origin: bottom; 
+}
+
+/* 
+  ========================================
+  CONTENT WRAPPER & GRID
+  ========================================
+*/
+.programs-content-wrapper {
+    position: relative;
+    z-index: 10;
+    padding: 8rem 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Opacity and Transform are now fully handled by GSAP ScrollTrigger */
+}
+
+.programs-header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.programs-header .section-number {
+    color: #ff3a00;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.programs-header h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 0 0 1rem 0;
+}
+
+.programs-header p {
+    font-size: 1.125rem;
+    color: #55555A;
+    font-weight: 400;
+}
+
+.programs-grid {
+    display: grid;
+    /* Reduced min-width from 320px to 280px */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+    width: 100%;
+    max-width: 1400px;
+    perspective: 1200px; 
+}
+
+/* 
+  ========================================
+  CARD CONTAINER & ELEVATION HOVER
+  ========================================
+*/
+.card-container {
+    width: 100%;
+    /* Reduced height from 420px to 380px */
+    height: 380px; 
+    background: transparent;
+    cursor: pointer;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-container:hover {
+    transform: translateY(-12px); /* Gentle rise */
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.card-inner.is-flipped {
+    transform: rotateY(180deg);
+}
+
+/* 
+  ========================================
+  CARD FACES & DYNAMIC SHADOWS
+  ========================================
+*/
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 20px;
+    /* Reduced padding from 3rem 2rem to 2.5rem 1.5rem */
+    padding: 2.5rem 1.5rem; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #FFFFFF;
+    
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03), 
+                0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: box-shadow 0.6s ease, border-color 0.6s ease;
+}
+
+.card-container:hover .card-face {
+    /* Premium volumetric shadow on hover */
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08), 
+                0 8px 16px rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Subtle Edge Glow using pseudo-element */
+.card-face::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.03) 100%);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.card-container:hover .card-face::before {
+    opacity: 1;
+}
+
+/* Dark Highlight Card Overrides */
+.card-container.highlight .card-face {
+    background: #030303;
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.card-container.highlight:hover .card-face {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15), 
+                0 8px 16px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.card-container.highlight .card-face::before {
+    background: linear-gradient(135deg, rgba(155, 17, 30, 0.5) 0%, transparent 50%, rgba(10, 25, 47, 0.5) 100%);
+}
+
+/* 
+  ========================================
+  PREMIUM TOP-RIGHT INDICATOR
+  ========================================
+*/
+.hover-indicator {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-container:hover .hover-indicator {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.icon-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    width: 14px;
+    height: 14px;
+}
+
+.icon-grid i {
+    background-color: #ff3a00; /* Vibrant accent color */
+    width: 100%;
+    height: 100%;
+    border-radius: 1px;
+}
+
+.icon-text {
+    writing-mode: vertical-rl;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #8A8A93;
+    transform: rotate(180deg);
+}
+
+/* 
+  ========================================
+  CARD FRONT / BACK TYPOGRAPHY
+  ========================================
+*/
+.card-front {
+    align-items: flex-start;
+    text-align: left;
+}
+
+.plan-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+}
+
+.price-block {
+    margin-bottom: auto;
+}
+
+.price {
+    display: block;
+    /* Reduced font size from 3rem to 2.5rem */
+    font-size: 2.5rem; 
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #8A8A93;
+}
+
+.card-container.highlight .subtitle {
+    color: #A0A0A5;
+}
+
+.cta-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #8A8A93;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cta-text::after {
+    content: '→';
+    transition: transform 0.3s ease;
+}
+
+.card-container:hover .cta-text::after {
+    transform: translateX(5px);
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    align-items: flex-start;
+    text-align: left;
+    background: #FAFAFB;
+}
+
+.card-container.highlight .card-back {
+    background: #0A0A0C;
+}
+
+.plan-name-small {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #8A8A93;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 auto 0;
+    width: 100%;
+}
+
+.feature-list li {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.card-container.highlight .feature-list li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #9B111E; 
+    font-weight: bold;
+}
+
+.select-btn {
+    width: 100%;
+    padding: 1rem;
+    background: #030303;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.select-btn:hover {
+    background: #9B111E;
+}
+
+.card-container.highlight .select-btn {
+    background: #FFFFFF;
+    color: #030303;
+}
+
+.card-container.highlight .select-btn:hover {
+    background: #E0E0E0;
+}

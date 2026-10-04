@@ -1,0 +1,316 @@
+/* 
+  ========================================
+  SECTION & DARK THEME BASE
+  ========================================
+*/
+.team-section {
+    position: relative;
+    min-height: 100vh;
+    background-color: #030303; /* Deep premium black */
+    color: #FFFFFF;
+    overflow: hidden;
+}
+
+/* 
+  ========================================
+  HORIZONTAL GSAP TRANSITION STREAKS
+  ========================================
+*/
+.transition-streaks-horizontal {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+}
+
+.streak-horizontal {
+    flex: 1;
+    background: #FFFFFF; /* Matches the previous Programs section */
+    /* GSAP will animate scaleX from 1 to 0 */
+    transform-origin: center; 
+}
+
+/* 
+  ========================================
+  CONTENT WRAPPER & HEADER
+  ========================================
+*/
+.team-content-wrapper {
+    position: relative;
+    z-index: 10;
+    padding: 8rem 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team-header {
+    text-align: center;
+    margin-bottom: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.section-number {
+    color: #ff3a00; /* Orange accent from reference image */
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+}
+
+.team-header h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400; /* Thinner, more elegant weight */
+    letter-spacing: 0.05em;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+/* 
+  ========================================
+  TEAM GRID
+  ========================================
+*/
+.team-grid {
+    display: grid;
+    /* 2 columns maximum for the team layout */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 450px));
+    gap: 3rem;
+    width: 100%;
+    max-width: 1000px;
+    justify-content: center;
+    perspective: 1200px; 
+}
+
+/* 
+  ========================================
+  CARD CONTAINER & 3D FLIP MECHANICS
+  ========================================
+*/
+.trainer-card-container {
+    width: 100%;
+    aspect-ratio: 3 / 4; /* Perfect portrait ratio */
+    background: transparent;
+    cursor: pointer;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.trainer-card-container:hover {
+    transform: translateY(-10px);
+}
+
+.trainer-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.trainer-card-inner.is-flipped {
+    transform: rotateY(180deg);
+}
+
+/* 
+  ========================================
+  CARD FACES (FRONT & BACK)
+  ========================================
+*/
+.trainer-card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background-color: #0A0A0C;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Base Hover Shadow/Glow for the card */
+.trainer-card-container:hover .trainer-card-face {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 
+                0 0 40px rgba(255, 58, 0, 0.05); /* Subtle orange glow */
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* --- FRONT FACE --- */
+.trainer-front {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Gradient to ensure text readability at the bottom */
+.trainer-gradient-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(3, 3, 3, 0.9) 0%, rgba(3, 3, 3, 0.2) 40%, transparent 100%);
+    z-index: 1;
+}
+
+.trainer-info-front {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+    margin-top: auto;
+}
+
+.trainer-name {
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.25rem 0;
+}
+
+.trainer-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #8A8A93;
+    letter-spacing: 0.1em;
+    margin: 0;
+}
+
+/* --- BACK FACE (BIO) --- */
+.trainer-back {
+    transform: rotateY(180deg);
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    background: #0A0A0C;
+}
+
+.trainer-info-back {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.bio-header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1.5rem;
+}
+
+.trainer-name-small {
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.25rem 0;
+    color: #FFFFFF;
+}
+
+.trainer-title-small {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #ff3a00;
+    letter-spacing: 0.1em;
+    margin: 0;
+}
+
+.trainer-bio-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #A0A0A5;
+    margin-bottom: auto; /* Pushes contact info to bottom */
+}
+
+.trainer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.contact-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #55555A;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+}
+
+.contact-link {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+    color: #ff3a00;
+}
+
+.close-bio-btn {
+    width: 100%;
+    padding: 1rem;
+    background: transparent;
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close-bio-btn:hover {
+    background: #FFFFFF;
+    color: #030303;
+}
+
+/* 
+  ========================================
+  PREMIUM TOP-RIGHT INDICATOR
+  ========================================
+*/
+.trainer-hover-indicator {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.trainer-card-container:hover .trainer-hover-indicator {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Specific crosshair style matching the reference */
+.trainer-icon-cross {
+    position: relative;
+    width: 14px;
+    height: 14px;
+}
+
+/* Top square */
+.trainer-icon-cross i:nth-child(1) { position: absolute; top: 0; left: 5px; width: 4px; height: 4px; background: #ff3a00; }
+/* Bottom square */
+.trainer-icon-cross i:nth-child(2) { position: absolute; bottom: 0; left: 5px; width: 4px; height: 4px; background: #ff3a00; }
+/* Left square */
+.trainer-icon-cross i:nth-child(3) { position: absolute; top: 5px; left: 0; width: 4px; height: 4px; background: #ff3a00; }
+/* Right square */
+.trainer-icon-cross i:nth-child(4) { position: absolute; top: 5px; right: 0; width: 4px; height: 4px; background: #ff3a00; }
+
+.trainer-icon-text {
+    writing-mode: vertical-rl;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #FFFFFF;
+    transform: rotate(180deg);
+}

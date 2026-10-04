@@ -1,0 +1,55 @@
+/* 
+  ========================================
+  GLOBAL RESETS & BASE TYPOGRAPHY
+  ========================================
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #030303;
+    color: #FFFFFF;
+    font-family: Inter, sans-serif;
+    overflow-x: hidden;
+    
+    /* Editorial Typography Polish */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* 
+  ========================================
+  MASTER LAYOUT & CINEMATIC FOOTER REVEAL
+  ========================================
+*/
+main {
+    position: relative;
+    /* Sits above the fixed footer */
+    z-index: 2; 
+    
+    /* Essential to block the fixed footer behind the main content */
+    background-color: #030303; 
+    
+    /* Creates the empty viewport window at the end of the document to reveal the footer */
+    margin-bottom: 100vh; 
+    
+    /* Heavy cinematic drop shadow falling over the footer as it is revealed */
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8); 
+}
